@@ -84,6 +84,13 @@ class ParseUrl
      */
     private $investorId;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Port", type="integer", nullable=true)
+     */
+    private $port;
+
 
     public function __construct()
     {
@@ -283,6 +290,30 @@ class ParseUrl
     public function getInvestorId()
     {
         return $this->investorId;
+    }
+
+    /**
+     * Set port
+     *
+     * @param integer $port
+     *
+     * @return ParseUrl
+     */
+    public function setPort($port)
+    {
+        $this->port = $port;
+
+        return $this;
+    }
+
+    /**
+     * Get port
+     *
+     * @return int
+     */
+    public function getPort()
+    {
+        return $this->port;
     }
 }
 

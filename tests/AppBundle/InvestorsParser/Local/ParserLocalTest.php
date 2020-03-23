@@ -14,8 +14,6 @@ class ParserLocalTest extends KernelTestCase
      */
     private $entityManager;
 
-    protected $parserId = 1;
-
     /**
      * {@inheritDoc}
      */
@@ -31,8 +29,7 @@ class ParserLocalTest extends KernelTestCase
     {
         $p = new ParserLocal($this->entityManager);
         $p->init('http://local004.local', 0, 0);
-        //$p->run();
-        $p->runNew();
+        $p->run();
 
         //var_dump($p->getLinksCount());
         //print_r($p->getAllLinks());

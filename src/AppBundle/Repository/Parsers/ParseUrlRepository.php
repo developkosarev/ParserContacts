@@ -10,4 +10,22 @@ namespace AppBundle\Repository\Parsers;
  */
 class ParseUrlRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLatest($page = 1)
+    {
+        /*
+        $query = $this->getEntityManager()
+            ->createQuery('
+                SELECT p, a, t
+                FROM AppBundle:Post p
+                JOIN p.author a
+                LEFT JOIN p.tags t
+                WHERE p.publishedAt <= :now
+                ORDER BY p.publishedAt DESC
+            ')
+            ->setParameter('now', new \DateTime())
+        ;
+
+        return $query->getOneOrNullResult();
+        */
+    }
 }

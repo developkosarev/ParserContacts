@@ -5,7 +5,6 @@ namespace AppBundle\Command;
 use AppBundle\Service\InvestorsParser\Local\ParserLocal;
 
 use Doctrine\ORM\EntityManagerInterface;
-use AppBundle\Entity\Parsers\Investor;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -45,29 +44,13 @@ class ParseLocalCommand extends Command
 
         $p = new ParserLocal($this->entityManager);
         $p->init('http://local004.local', 0, 0);
-        $p->run();
+        //$p->run();
 
+        while ($p->next()) {
+            $output->writeln('Url: ' . $p->getCurrentParserUrl()->getId() . ' ' . $p->getCurrentParserUrl()->getStatus());
 
-        //$em = $this->entityManager;
-
-        // A. Access repositories
-        //$repo = $em->getRepository("App:SomeEntity");
-        //$repo = $em->getRepository(Investor::class);
-
-        // B. Search using regular methods.
-        //$res1 = $repo->find(1);
-        //$res2 = $repo->findBy(['field' => 'value']);
-        //$res3 = $repo->findAll();
-        //$res4 = $repo->createQueryBuilder('alias')
-        //    ->where("alias.field = :fieldValue")
-        //    ->setParameter("fieldValue", 123)
-        //    ->setMaxResults(10)
-        //    ->getQuery()
-        //    ->getResult();
-
-        // C. Persist and flush
-        //$em->persist($someEntity);
-        //$em->flush();
+            //sleep($p->getSleep());
+        }
 
     }
 }

@@ -101,21 +101,41 @@ class CrawlerAnwalt
         $this->crawler->clear();
         $this->crawler->addHtmlContent($html);
 
-        $name = $this->crawler->filter('h1')->first()->text();
-        $name = trim($name);
+        $name = '';
+        $specialization = '';
+        $address = '';
+        $phone = '';
 
+        try {
+            $name = $this->crawler->filter('h1')->first()->text();
+            $name = trim($name);
 
-        $crawler = $this->crawler->filter('div.jsProfileStickyBar div.row');
+            $crawler = $this->crawler->filter('div.jsProfileStickyBar div.row');
 
-        $specialization = $crawler->filter('strong')->first()->text();
-        $specialization = trim($specialization);
+            $specialization = $crawler->filter('strong')->first();
+            if ($specialization->count() > 0 ){
+                $specialization = trim($specialization->text());
+            } else {
 
-        $crawler = $this->crawler->filter('div.mb-2');
+                $specialization = $crawler->filter('i.fa-balance-scale');
+                if ($specialization->count() > 0 ){
+                    $specialization = $specialization->siblings()->filter('span')->first();
+                    $specialization = trim($specialization->text());
+                } else {
+                    $specialization = 'undefined';
+                }
 
-        $address = $crawler->filter('span')->first()->text();
+            }
 
-        $phone = $crawler->filter('a.jsPhoneCounterAble')->first()->attr('href');
-        $phone = str_replace('tel:','',$phone);
+            $crawler = $this->crawler->filter('div.mb-2');
+
+            $address = $crawler->filter('span')->first()->text();
+
+            $phone = $crawler->filter('a.jsPhoneCounterAble')->first()->attr('href');
+            $phone = str_replace('tel:','',$phone);
+        } catch (Exception $e) {
+
+        }
 
         return [
             'name' => $name,
